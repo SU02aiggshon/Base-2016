@@ -14,3 +14,4 @@ $_SESSION['gtserver'] = $status;
 $_SESSION['user_id'] = $user_id;
 echo $GtSdk->get_response_str();
  ?>
+ 
