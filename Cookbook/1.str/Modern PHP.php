@@ -1,5 +1,4 @@
 <?php
-echo "Modern" , PHP_EOL , "PHP";
 // Generator
 /*function myGenerator(){
 	yield 'value1';
