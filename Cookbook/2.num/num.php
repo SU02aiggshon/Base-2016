@@ -234,4 +234,125 @@ $out2 = "Soylent Green is " . may_pluralize('person', $number_of_people) . '!';
 echo $out1, "\n", $out2;
 print "<hr />";
 
-//2.13 讨论三角函数
+// 2.16     转换进制
+$a = bindec(11011);     //二进制转换十进制
+$a = octdec(33);        //八进制转换十进制
+$a = hexdec('1b');      //十六进制转换十进制
+
+$a = decbin(27);        //十进制转换二进制
+$a = decoct(27);        //十进制转换八进制
+$a = dechex(27);        //十进制转换十六进制
+
+$red = 0;
+$green = 102;
+$blue = 204;
+$color = sprintf('#%02X%02X%02X', $red, $green, $blue);
+echo $color;
+
+// 2.17 非十进制计算
+if (100 == 0144 && 0x64 == 0b1100100 && 0144 == 0x64 && 100 == 0b1100100) {
+    for ($i = 0x1; $i < 0x10; $i++) {
+        print "$i\n";
+    }
+}
+
+function times_33_hash($str)
+{
+    $h = 5381;
+    for ($i = 0, $j = strlen($str); $i < $j; $i++) {
+        //将 $h 左移5位，这是诚意32的一种快捷算法
+        $h += ($h << 5) + ord($str[$i]);
+        //之保留$h的低32位
+        $h = $h & 0xFFFFFFFF;
+    }
+    return $h;
+}
+
+echo times_33_hash('a') . "\n";
+
+//2.18 找出两个位置之间的距离
+function sphere_distance($lat1, $lon1, $lat2, $lon2, $radius = 6378.135)
+{
+    $rad = doubleval(M_PI / 180.0);
+
+    $lat1 = doubleval($lat1) * $rad;
+    $lon1 = doubleval($lon1) * $rad;
+    $lat2 = doubleval($lat2) * $rad;
+    $lon2 = doubleval($lon2) * $rad;
+
+    $theta = $lon2 - $lon1;
+    $dist = acos(sin($lat1) * sin($lat2)) + cos($lat1) * cos($lat2) * cos($theta);
+    if ($dist < 0) {
+        $dist += M_PI;
+    }
+    return $dist = $dist * $radius;
+}
+
+$lat1 = 40.858704;
+$lon1 = -73.928532;
+
+$lat2 = 37.758434;
+$lon2 = -122.435126;
+$dist = sphere_distance($lat1, $lon1, $lat2, $lon2);
+$formatted = sprintf("%.2f", $dist * 0.621);
+echo $formatted . "\n";
+
+//3-1 使用mttime() date()
+$stamp = mktime(0, 0, 0, 1, 1, 1986);
+print date('l', $stamp) . "\n";
+
+//3-2 查找当前日期和时间
+print date('r') . "\n";
+$when = new DateTime();
+print $when->format('r') . "\n";
+
+//3-3
+$now_1 = getdate();
+$now_2 = localtime();
+print "{$now_1['hours']}:{$now_1['minutes']}:{$now_1['seconds']}\n";
+print "$now_2[2]:$now_2[1]:$now_2[0]\n";
+
+//3-4 月日年
+$a = getdate();
+printf('%s %d, %d ', $a['month'], $a['mday'], $a['year']);
+
+//3-5
+$a = getdate(163727100);
+printf('%s %d, %d', $a['month'], $a['mday'], $a['year']);
+
+//3-6
+$a = localtime();
+$a[4] += 1;
+$a[5] += 1900;
+print "$a[4]/$a[3]/$a[5]\n";
+
+//3-7 3-8 3-9   将时间和日期转换纪元时间戳
+$then = mktime(19, 45, 3, 3, 10, 1975);
+$then = gmmktime(19, 45, 3, 3, 10, 1975);
+$then = DateTime::createFromFormat(DateTime::ATOM, "1975-03-10T19:45:03");
+print $then . "\n";
+
+//3-10 3-11 3-12    将时间戳转化为时间和日期
+date_default_timezone_get('Asia/Shanghai');
+$stamp_future = mktime(15, 25, 0, 12, 3, 2024);
+$formatted = date('c', $stamp_future);
+echo $formatted . "\n";
+
+$stamp_future = gmmktime(15, 25, 0, 12, 3, 2024);
+print $stamp_future . "\n";
+
+$text = "Birthday: May 11, 1918.";
+$when = DateTime::createFromFormat("*: F j, Y.|", $text);
+$formatted = $when->format(DateTime::RFC850);
+print $formatted."\n";
+
+//3-13  指定格式输出时间和日期
+print date('d/m/y')."\n";
+$when = new DateTime();
+print $when->format('d/m/y');
+
+//3-14  计算两个日期之差
+
+
+
+
