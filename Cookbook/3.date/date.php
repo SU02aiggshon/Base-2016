@@ -71,37 +71,39 @@ printf("The two dates have %d weeks, %s days, " . "%d hours, %d minutes, and %d 
     floor($diff->format('%a') / 7), $diff->format('%a') % 7, $diff->format('%h'), $diff->format('%i'), $diff->format('%s'));
 
 //3-16 查找年 月 或者 周中的某一天
-print "Today is day ".date('d').' of the month and '.date('z').' of the year.';
+print "Today is day " . date('d') . ' of the month and ' . date('z') . ' of the year.';
 print "\n";
 $birthday = new DateTime('January 17, 1706', new DateTimeZone('America/New_York'));
-print "Benjamin Franklin was born on a ".$birthday->format('l').", ". "day ". $birthday->format('N'). " of the week. \n";
+print "Benjamin Franklin was born on a " . $birthday->format('l') . ", " . "day " . $birthday->format('N') . " of the week. \n";
 
 //3-17 检查一周的一天
-if(0 == date('w')){
+if (0 == date('w')) {
     print "Welcome to the beginning of your work week. \n";
 }
 
 //3-18 验证日期
-function checkbirthday($month, $day, $year){
+function checkbirthday($month, $day, $year)
+{
     $min_age = 18;
     $max_age = 122;
-    if(! checkdate($month,$day,$year)){
+    if (!checkdate($month, $day, $year)) {
         return false;
     }
 
     $now = new DateTime();
     $then_formatted = sprintf("%d-%d-%d", $year, $month, $day);
-    $then = DateTime::createFromFormat("Y-n-j|",$then_formatted);
+    $then = DateTime::createFromFormat("Y-n-j|", $then_formatted);
     $age = $now->diff($then);
-    if($age->y < $min_age || $age->y > $max_age){
+    if ($age->y < $min_age || $age->y > $max_age) {
         return false;
-    }else{
+    } else {
         return true;
     }
 }
-if(checkbirthday(12,3,1974)){
+
+if (checkbirthday(12, 3, 1974)) {
     print "You may use this Web site. \n";
-}else{
+} else {
     print "You are too young (or too old!!) to proceed. \n";
 }
 
@@ -112,12 +114,12 @@ $a = strtotime('now + 3 months');
 print "$a \n";
 
 // 3-20 解析制定格式的日期
-$dates = ['01/02/2015','03/06/2015','09/08/2015'];
-foreach ($dates as $date){
+$dates = ['01/02/2015', '03/06/2015', '09/08/2015'];
+foreach ($dates as $date) {
     $default = new DateTime($date);
-    $day_first = DateTime::createFromFormat('d/m/Y|',$date);
+    $day_first = DateTime::createFromFormat('d/m/Y|', $date);
     printf("The default interpretation is %s\n but day-first is %s. \n",
-        $default->format(DateTime::RFC850),$day_first->format(DateTime::RFC850));
+        $default->format(DateTime::RFC850), $day_first->format(DateTime::RFC850));
 }
 
 // 3-21 日期加减
@@ -147,7 +149,7 @@ print date(DATE_RFC850, $now) . "\n";
 
 // 3-24 生成高精度时间
 $start = microtime(true);
-for ($i = 0; $i < 1000; $i++){
+for ($i = 0; $i < 1000; $i++) {
     preg_match('/age=\d{1,5}/', $_SERVER['QUERY_STRING']);
 }
 $end = microtime(true);
@@ -155,14 +157,7 @@ $elapsed = $end - $start;
 print $elapsed . "\n";
 
 // 3-25 用microtime 生成ID
-list($microseconds,$second) = explode(' ', microtime());
-print $second . $microseconds.getmygid(). "\n";
-
-
-
-
-
-
-
+list($microseconds, $second) = explode(' ', microtime());
+print $second . $microseconds . getmygid() . "\n";
 
 
