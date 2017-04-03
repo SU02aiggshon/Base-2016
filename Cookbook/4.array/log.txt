@@ -1,0 +1,7 @@
+$a = ['To', 'be', 'or', 'not', 'to', 'be'];
+$b = ['To', 'be', 'or', 'whatever'];
+$union = array_unique(array_merge($a, $b));//数组并集，两个数组的所有元素
+$intersection = array_intersect($a, $b);//数组交集，两个数组中共有的元素
+$difference = array_diff($a, $b);//数组差集，一个数组有，另一个数组没有的元素
+$difference = array_merge(array_diff($a, $b), array_diff($b, $a));//对称差集，两个数组互相不相同的元素
+print_r($difference);
